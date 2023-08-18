@@ -24,3 +24,10 @@ Both encoder and decoder start with the same initial model. As they process the 
 
 ## Usage
 See [notebook.ipynb](notebook.ipynb)
+
+## Read more
+- [NNCP v2: Lossless Data Compression with
+Transformer](https://bellard.org/nncp/nncp_v2.1.pdf)
+- [Lossless Data Compression with Neural Networks](https://bellard.org/nncp/nncp.pdf)
+- [Arithmetic encoding](https://en.wikipedia.org/wiki/Arithmetic_coding)
+
