@@ -1,5 +1,3 @@
-# Weightless Neural Network de-compression
-
 # Neural Network Decompression Without Storing Weights
 This repository demonstrates a novel method of data compression using neural networks, inspired by [NNCP](https://bellard.org/nncp/) and this [HackerNews post](https://news.ycombinator.com/item?id=27244810). The fascinating aspect of this technique is the ability to decompress data without the need to store or transmit the neural network's weights.
 
