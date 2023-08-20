@@ -1,5 +1,10 @@
 # Neural Network Decompression Without Storing Weights
-This repository demonstrates a basic implementation for a method of data de-compression using neural networks, inspired by [NNCP](https://bellard.org/nncp/) and this [HackerNews post](https://news.ycombinator.com/item?id=27244810). The fascinating aspect of this technique is the ability to decompress data WITHOUT the need to store or transmit the neural network's weights.
+The [notebook.ipynb](notebook.ipynb) demonstrates this workflow:
+- Encoder: Compress data.txt -> compressed.txt using a simple LSTM neural network
+- Decoder: Decompress compressed.txt WITHOUT transmitting the neural network weights
+- Relies on the encoder training+compressing one sequence at a time, and decoder mirroring the steps exactly by decompressing+training one sequence at a time (sharing states w/o needing to transmit weights)
+
+The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB), cleverly avoiding needing to store the NN weights in the file, and is explained in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
 
 ## Overview
 We encode sequences of digits like "000000", "000001", etc., and store the compressed [data](data.txt) in [compressed.txt](compressed.txt). Despite not saving the neural network's weights, we can then decompress this data, retrieving the original sequences. This is achieved by ensuring that both the encoder and decoder evolve identically during their respective processes.
