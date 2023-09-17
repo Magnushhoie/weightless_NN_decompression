@@ -6,6 +6,8 @@ Instead of storing all words in a sentence, we can instead only store the index 
 An apple a day keeps the doctor away (37 characters)
 -> 40, 9, 6, 3, 1, 1, 1, 1 (9 digits)
 
+<img width="480" alt="image" src="https://github.com/Magnushhoie/weightless_NN_decompression/assets/39849954/4fe62e9c-bdc7-4904-86b3-4a75e371e646">
+
 Likewise, given a list of indices to select the next words from the same neural network, we can decode the digits back to words.
 
 However, this requires us to store the full neural network weights, throwing away any compression gains. Interestingly, it is possible to decode the digits without ever storing the neural weights.
