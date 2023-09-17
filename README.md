@@ -13,7 +13,7 @@ However, this requires us to store the full neural network weights, throwing awa
 The [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
 - Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
 - Decoder neural network: Decompresses compressed.txt WITHOUT transmitting the neural network weights
-- The idea works by having the encoder compressing text while it is training, and the decoder mirroring the process exactly by decompressing and training on the decompressed text. This way, both neural netowrks always share the same state over time, removing the need to store the weights externally.
+- The idea works by having the encoder compressing text while it is training, and the decoder mirroring the process exactly by decompressing and training on the decompressed text. This way, both neural networks always share the same state over time, removing the need to store the weights externally.
 
 The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB), cleverly avoiding needing to store the NN weights in the file, and is explained in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
 
