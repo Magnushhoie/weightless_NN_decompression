@@ -1,8 +1,19 @@
-# Neural Network Decompression Without Storing Weights
-The [notebook.ipynb](notebook.ipynb) demonstrates this workflow:
-- Encoder: Compress data.txt -> compressed.txt using a simple LSTM neural network
-- Decoder: Decompress compressed.txt WITHOUT transmitting the neural network weights
-- Relies on the encoder training+compressing one sequence at a time, and decoder mirroring the steps exactly by decompressing+training one sequence at a time (sharing states w/o needing to transmit weights)
+# Rationale
+
+Neural network-based language models are ideally suited for compressing text, as they can efficiently predict the next word in a sentence.
+Instead of storing all words in a sentence, we can instead only store the index of the next predicted words:
+
+An apple a day keeps the doctor away (37 characters)
+-> 40, 9, 6, 3, 1, 1, 1, 1 (9 digits)
+
+Likewise, given a list of indices to select the next words from the same neural network, we can decode the digits back to words.
+
+However, this requires us to store the full neural network weights, throwing away any compression gains. Interestingly, it is possible to decode the digits without ever storing the neural weights.
+
+The [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
+- Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
+- Decoder neural network: Decompresses compressed.txt WITHOUT transmitting the neural network weights
+- The idea works by having the encoder compressing text while it is training, and the decoder mirroring the process exactly by decompressing and training on the decompressed text. This way, both neural netowrks always share the same state over time, removing the need to store the weights externally.
 
 The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB), cleverly avoiding needing to store the NN weights in the file, and is explained in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
 
