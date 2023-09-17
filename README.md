@@ -15,25 +15,26 @@ The [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
 - Decoder neural network: Decompresses compressed.txt WITHOUT transmitting the neural network weights
 - The idea works by having the encoder compressing text while it is training, and the decoder mirroring the process exactly by decompressing and training on the decompressed text. This way, both neural networks always share the same state over time, removing the need to store the weights externally.
 
-The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB), cleverly avoiding needing to store the NN weights in the file, and is explained in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
+The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB). Under normal circumstances the compressed file would also have to contain the decoder neural weights, but with this technique this requirement is removed. You can read more in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
 
 ## Notebook proof-of-concept
 See [notebook.ipynb](notebook.ipynb)
 
-## Overview
-We encode sequences of digits like "000000", "000001", etc., and store the compressed [data](data.txt) in [compressed.txt](compressed.txt). Despite not saving the neural network's weights, we can then decompress this data, retrieving the original sequences. This is achieved by ensuring that both the encoder and decoder evolve identically during their respective processes.
+## Implementation details
+We encode sequences of digits like "000000", "000001", etc., and store the compressed [data](data.txt) in [compressed.txt](compressed.txt). Instead of using the index of the most likely next word, we'll be even more efficient and use an [Arithmetic Compressor](https://pypi.org/project/arithmetic-compressor/).
 
-## Key Concepts
+Despite not saving the neural network's weights, we can then decompress this data, retrieving the original sequences. This is achieved by ensuring that both the encoder and decoder evolve identically during their respective processes.
+
 Both encoder and decoder start with the same initial model. As they process the sequences, they update their models identically, ensuring synchronized evolution.
 
-Encoder:
-- Initialize a neural network with all weights set to the same value (need weight updates to be deterministic)
-- (Nb: Save the first sequence without compression)
+Encoder neural network:
+- Initialize a neural network with all weights set to the same value (we need the weight updates to be deterministic)
+- (Nb: We save the first sequence without compressing it)
 - For each digit in a sequence, predict the next digit using a neural network model (learning a probability distribution)
 - Update the neural network based on the loss
-- When done with a sequence, compress the next one based on the learned probability distribution so far using an [Arithmetic Compressor](https://pypi.org/project/arithmetic-compressor/)
+- When done with a sequence, compress the next one based on the learned probability distribution so far using an Arithmetic Compressor.
 
-Decoder (where the magic happens):
+Decoder neural network:
 - Initialize the same neural network with the same fixed value
 - (Nb: load the first uncompressed sentence)
 - Predict each digit of a sequence using the current state of the neural network
