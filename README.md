@@ -10,7 +10,9 @@ An apple a day keeps the doctor away (37 characters)
 
 Likewise, given a list of indices to select the next words from the same neural network, we can decode the digits back to words.
 
-However, this requires us to store the full neural network weights, throwing away any compression gains. Interestingly, it is possible to decode the digits without ever storing the neural weights.
+However, normally this requires us to store the full neural network weights, throwing away any compression gains.
+
+The below proof of concept details a a way to avoid storing the weights, by learning them on-the-go from the compressed data itself.
 
 The [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
 - Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
