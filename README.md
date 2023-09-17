@@ -1,7 +1,7 @@
 # Rationale
 
 Neural network-based language models are ideally suited for compressing text, as they can efficiently predict the next word in a sentence.
-Instead of storing all words in a sentence, we can instead only store the index of the next predicted words:
+Instead of storing all words directly, we can instead store only the index of the word in the predicted probability distribution, across the sentence:
 
 An apple a day keeps the doctor away (37 characters)
 -> 40, 9, 6, 3, 1, 1, 1, 1 (9 digits)
