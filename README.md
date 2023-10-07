@@ -7,7 +7,7 @@ Character counts (excluding spaces):
 - Original words: An apple a day keeps the doctor away (30 characters)
 - Neural network predicted word indices: 40 9 6 3 1 1 1 1 (9 characters)
 
-Even this naive implementation achieves a compression ratio of 9/30 = 0.30.
+Even this naive implementation achieves an impressive compression ratio of 9/30 = 0.30.
 
 <img width="480" alt="image" src="https://github.com/Magnushhoie/weightless_NN_decompression/assets/39849954/4fe62e9c-bdc7-4904-86b3-4a75e371e646">
 
