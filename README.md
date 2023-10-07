@@ -15,7 +15,7 @@ However, this only works if we already have the neural network weights available
 
 The below proof of concept details a a way to avoid storing the weights, by learning them on-the-go from the compressed data itself.
 
-The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB). Under normal circumstances the compressed file would also have to contain the decoder neural weights, but with this technique this requirement is removed. You can read more in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
+The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB). You can read more in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
 
 ## Tldr; Notebook proof-of-concept
 This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
