@@ -1,5 +1,10 @@
-## Rationale
+## Tldr
+This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
+- Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
+- Decoder neural network: Decompresses compressed.txt directly from the file and **without** transmitting neural weights.
+- How: Encoder and decoder are trained in a deterministic, synchronized process, training on currently seen (de-compressed) data. This guarantees both networks share the exact same state over time, removing need to externally store weights.
 
+## Rationale
 Neural network-based language models are ideally suited for compressing text, as they can efficiently predict the next word in a sentence.
 Instead of storing all words directly, we can instead find where each word is in the neural network's top predicted words, and only use the index instead.
 
@@ -16,12 +21,6 @@ However, this only works if we already have the neural network weights available
 The below proof of concept details a a way to avoid storing the weights, by learning them on-the-go from the compressed data itself.
 
 The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), which holds the currently world record for smallest compressed version of Wikipedia file (~1 GB -> 100 MB). You can read more in this [HackerNews post](https://news.ycombinator.com/item?id=27244810).
-
-## Tldr; Notebook proof-of-concept
-This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
-- Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
-- Decoder neural network: Decompresses compressed.txt directly from the file and without directly transmitting any of the previously learned neural network weights
-- The idea works by having the encoder compressing text while it is training, and the decoder mirroring the process exactly by decompressing and training on the decompressed text. This way, both neural networks always share the same state over time, removing the need to store the weights externally.
 
 ## Implementation details
 We encode sequences of digits like "000000", "000001", etc., and store the compressed [data](data.txt) in [compressed.txt](compressed.txt). Instead of using the index of the most likely next word, we'll be even more efficient and use an [Arithmetic Compressor](https://pypi.org/project/arithmetic-compressor/).
