@@ -1,4 +1,7 @@
 ## Tldr
+
+Problem: We decompress a file, compressed by a neural network model, without ever storing the model's weights
+
 This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
 - Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
 - Decoder neural network: Decompresses compressed.txt directly from the file and **without** transmitting neural weights.
@@ -25,9 +28,7 @@ The idea comes from this [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf), w
 ## Implementation details
 We encode sequences of digits like "000000", "000001", etc., and store the compressed [data](data.txt) in [compressed.txt](compressed.txt). Instead of using the index of the most likely next word, we'll be even more efficient and use an [Arithmetic Compressor](https://pypi.org/project/arithmetic-compressor/).
 
-Despite not saving the neural network's weights, we can then decompress this data, retrieving the original sequences. This is achieved by ensuring that both the encoder and decoder evolve identically during their respective processes.
-
-Both encoder and decoder start with the same initial model. As they process the sequences, they update their models identically, ensuring synchronized evolution.
+Both encoder and decoder start with the same initial model. As they process the sequences, they update their models identically, ensuring synchronized evolution. This makes them 100 % identical models during and after training.
 
 Encoder neural network:
 - Initialize a neural network with all weights set to the same value (we need the weight updates to be deterministic)
