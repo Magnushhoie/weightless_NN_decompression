@@ -1,11 +1,13 @@
 ## Tldr
 
-We decompress a file, compressed by a neural network model, without ever storing the model's weights
+We decompress a file, compressed by a neural network model, without ever storing the model's weights. This concept is used by the current world record for Wikipedia compression (1 GB -> 100 MB, see [2019 NNCP paper](https://bellard.org/nncp/nncp.pdf) and this [HackerNews post](https://news.ycombinator.com/item?id=27244810)).
 
 This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
-- Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
-- Decoder neural network: Decompresses compressed.txt directly from the file and **without** transmitting neural weights.
-- How: Encoder and decoder are trained in a deterministic, synchronized process, training on currently seen (de-compressed) data. This guarantees both networks share the exact same state over time, removing need to externally store weights.
+1. Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
+2. Decoder neural network: Decompresses compressed.txt directly from the file and **without** transmitting neural weights.
+
+**How does it work?**
+Encoder and decoder are trained in a deterministic, synchronized process, training on currently seen (de-compressed) data. This guarantees both networks share the exact same state over time, removing need to externally store weights.
 
 ## Rationale
 Neural network-based language models are ideally suited for compressing text, as they can efficiently predict the next word in a sentence.
