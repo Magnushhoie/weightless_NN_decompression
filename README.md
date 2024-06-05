@@ -1,6 +1,6 @@
 ## Tldr
 
-Problem: We decompress a file, compressed by a neural network model, without ever storing the model's weights
+We decompress a file, compressed by a neural network model, without ever storing the model's weights
 
 This [notebook.ipynb](notebook.ipynb) demonstrates this proof of concept:
 - Encoder neural network: Compresses data.txt -> compressed.txt using a simple LSTM neural network
